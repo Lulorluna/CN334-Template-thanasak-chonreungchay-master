@@ -3,6 +3,16 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from product_management.models import Product
 from product_management.serializers import ProductSerializer
+from rest_framework import status
+
+
+class ProductListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response({"data": serializer.data}, status=status.HTTP_200_OK)
 
 
 class ProductDetailView(APIView):

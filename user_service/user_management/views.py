@@ -6,7 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 from user_management.models import Customer
-from user_management.serializers import CustomerSerializer
+from user_management.serializers import *
+from rest_framework import status
 
 
 @csrf_exempt
@@ -38,3 +39,17 @@ class CustomerView(APIView):
         customer_serializer = CustomerSerializer(customer_data)
         content = {"data": customer_serializer.data}
         return Response(content)
+
+
+class UserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+            )

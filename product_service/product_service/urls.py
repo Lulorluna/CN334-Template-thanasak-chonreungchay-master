@@ -22,6 +22,7 @@ from product_management.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/product/all/", ProductListView.as_view(), name="product-list"),
     path(
         "api/product/<int:product_id>/",
         ProductDetailView.as_view(),
