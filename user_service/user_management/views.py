@@ -53,3 +53,9 @@ class UserView(APIView):
             return Response(
                 {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
             )
+
+
+class SummaryView(APIView):
+    def get(self, request):
+        count = User.objects.count()
+        return Response({"count": count})

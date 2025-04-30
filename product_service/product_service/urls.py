@@ -34,4 +34,5 @@ urlpatterns = [
         OrderByProductIdView.as_view(),
         name="order-by-product-id",
     ),
+    path("api/summarize/", ProductSummaryView.as_view(), name="summarize"),
 ]
