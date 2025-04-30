@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from product_management.views import *
+from order_management.views import *
 
 
 urlpatterns = [
@@ -27,5 +28,10 @@ urlpatterns = [
         "api/product/<int:product_id>/",
         ProductDetailView.as_view(),
         name="product-detail",
+    ),
+    path(
+        "api/order/byProductId/<int:product_id>/",
+        OrderByProductIdView.as_view(),
+        name="order-by-product-id",
     ),
 ]
